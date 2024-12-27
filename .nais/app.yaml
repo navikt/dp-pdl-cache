@@ -1,0 +1,68 @@
+apiVersion: nais.io/v1alpha1
+kind: Application
+
+metadata:
+  name: dp-pdl-cache
+  namespace: teamdagpenger
+  labels:
+    team: teamdagpenger
+
+spec:
+  image: {{ image }}
+  port: 8080
+
+  {{#if ingresses}}
+  ingresses:
+    {{#each ingresses as |url|}}
+     - {{url}}
+    {{/each}}
+  {{/if}}
+
+  replicas:
+    min: 2
+    max: 4
+  resources:
+    limits:
+      memory: 512Mi
+    requests:
+      cpu: 150m
+      memory: 256Mi
+  liveness:
+    path: /isAlive
+  readiness:
+    path: /isReady
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: java
+  prometheus:
+    enabled: true
+    path: /metrics
+  secureLogs:
+    enabled: true
+
+  tokenx:
+    enabled: true
+
+  redis:
+    - instance: identer
+      access: readwrite
+
+  env:
+    - name: JDK_JAVA_OPTIONS # Bytter GC og lar JVMen se at det er flere CPU kjerner
+      value: -XX:+UseParallelGC -XX:ActiveProcessorCount=4
+
+  accessPolicy:
+    outbound:
+      rules:
+        - application: dp-arena-meldeplikt-adapter
+        - application: dp-behov-pdf-generator
+    inbound:
+      rules:
+        - application: dp-saksbehandling-frontend
+        - application: dp-rapportering-frontend
+        - application: tokenx-token-generator
+          namespace: aura
+          cluster: dev-gcp
+
+

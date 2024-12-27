@@ -1,0 +1,5 @@
+ingresses:
+  - https://dp-pdl-cache.intern.dev.nav.no
+redis:
+  plan: startup-4
+  project: nav-dev

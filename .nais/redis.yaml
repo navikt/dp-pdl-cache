@@ -1,0 +1,12 @@
+apiVersion: aiven.io/v1alpha1
+kind: Redis
+
+metadata:
+  labels:
+    app: dp-pdl-cache
+    namespace: teamdagpenger
+  name: redis-teamdagpenger-identer
+  namespace: teamdagpenger
+spec:
+  plan: {{ redis.plan }}
+  project: {{ redis.project }}
