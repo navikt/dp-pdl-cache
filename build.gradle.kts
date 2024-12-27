@@ -1,5 +1,7 @@
 val ktorVersion = "3.0.2"
 
+project.setProperty("mainClassName", "io.ktor.server.netty.EngineMain")
+
 plugins {
     // Apply the org.jetbrains.kotlin.jvm plugin to add support for Kotlin.
     kotlin("jvm") version "2.1.0"
@@ -24,7 +26,7 @@ sourceSets {
 
 application {
     // Define the main class for the application.
-    mainClass = "io.ktor.server.netty.EngineMain"
+    mainClass.set(project.property("mainClassName").toString())
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -52,12 +54,31 @@ dependencies {
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-cio:$ktorVersion")
 
+    implementation("io.github.microutils:kotlin-logging:3.0.5")
+    implementation("ch.qos.logback:logback-classic:1.5.12")
+    implementation("net.logstash.logback:logstash-logback-encoder:8.0")
+
     testImplementation(kotlin("test"))
     testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
     testImplementation("no.nav.security:mock-oauth2-server:2.1.10")
 }
 
-tasks.named<Test>("test") {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
+tasks {
+    withType<ProcessResources> {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+
+    named<Test>("test") {
+        // Use JUnit Platform for unit tests.
+        useJUnitPlatform()
+    }
+
+    register("runServerTest", JavaExec::class) {
+        systemProperties["RUNNING_LOCALLY"] = "true"
+        systemProperties["TOKEN_X_WELL_KNOWN_URL"] = "tokenx.dev.nav.no"
+        systemProperties["TOKEN_X_CLIENT_ID"] = "test:dp:pdlcache"
+
+        mainClass.set(project.property("mainClassName").toString())
+        classpath = sourceSets["main"].runtimeClasspath
+    }
 }
