@@ -49,6 +49,10 @@ dependencies {
     implementation("io.ktor:ktor-server-metrics-micrometer:$ktorVersion")
     implementation("io.micrometer:micrometer-registry-prometheus:1.14.2")
 
+    implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-jackson:$ktorVersion")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.2")
+
     implementation("no.nav.security:token-validation-ktor-v3:5.0.13")
 
     implementation("io.ktor:ktor-client-core:$ktorVersion")
