@@ -5,8 +5,12 @@ import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.HttpTimeout
 import java.time.Duration
 
+fun getEnv(propertyName: String): String? {
+    return System.getProperty(propertyName, System.getenv(propertyName))
+}
+
 fun isCurrentlyRunningLocally(): Boolean {
-    return System.getenv("RUNNING_LOCALLY").toBoolean()
+    return getEnv("RUNNING_LOCALLY").toBoolean()
 }
 
 lateinit var httpClient: HttpClient
