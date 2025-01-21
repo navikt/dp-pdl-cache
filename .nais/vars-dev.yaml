@@ -1,5 +1,5 @@
 ingresses:
   - https://dp-pdl-cache.intern.dev.nav.no
-redis:
+valkey:
   plan: startup-4
   project: nav-dev

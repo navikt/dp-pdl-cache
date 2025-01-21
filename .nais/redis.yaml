@@ -1,12 +1,12 @@
 apiVersion: aiven.io/v1alpha1
-kind: Redis
+kind: Valkey
 
 metadata:
   labels:
     app: dp-pdl-cache
     namespace: teamdagpenger
-  name: redis-teamdagpenger-identer
+  name: valkey-teamdagpenger-identer
   namespace: teamdagpenger
 spec:
-  plan: {{ redis.plan }}
-  project: {{ redis.project }}
+  plan: {{ valkey.plan }}
+  project: {{ valkey.project }}

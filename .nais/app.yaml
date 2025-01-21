@@ -44,7 +44,7 @@ spec:
   tokenx:
     enabled: true
 
-  redis:
+  valkey:
     - instance: identer
       access: readwrite
 

@@ -1,5 +1,5 @@
 ingresses:
   - https://dp-pdl-cache.intern.nav.no
-redis:
+valkey:
   plan: business-4
   project: nav-prod
