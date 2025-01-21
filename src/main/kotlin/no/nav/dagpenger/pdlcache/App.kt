@@ -21,6 +21,7 @@ import io.micrometer.core.instrument.binder.system.ProcessorMetrics
 import io.micrometer.prometheusmetrics.PrometheusConfig
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import no.nav.dagpenger.pdlcache.api.internalApi
+import no.nav.dagpenger.pdlcache.api.testApi
 import no.nav.dagpenger.pdlcache.utils.defaultHttpClient
 import no.nav.dagpenger.pdlcache.utils.isCurrentlyRunningLocally
 import no.nav.security.token.support.v3.tokenValidationSupport
@@ -70,5 +71,6 @@ fun Application.main(httpClient: HttpClient = defaultHttpClient()) {
 
     routing {
         internalApi(appMicrometerRegistry)
+        testApi()
     }
 }
