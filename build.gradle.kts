@@ -1,4 +1,4 @@
-val ktorVersion = "3.0.2"
+val ktorVersion = "3.0.3"
 
 project.setProperty("mainClassName", "io.ktor.server.netty.EngineMain")
 
