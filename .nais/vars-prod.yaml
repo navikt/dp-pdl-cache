@@ -3,3 +3,5 @@ ingresses:
 valkey:
   plan: business-4
   project: nav-prod
+PDL_API_HOST: pdl-api.prod-fss-pub.nais.io
+PDL_AUDIENCE: prod-fss:pdl:pdl-api

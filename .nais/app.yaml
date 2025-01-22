@@ -49,18 +49,19 @@ spec:
       access: readwrite
 
   env:
+    - name: PDL_API_HOST
+      value: {{ PDL_API_HOST }}
+    - name: PDL_AUDIENCE
+      value: {{ PDL_AUDIENCE }}
     - name: JDK_JAVA_OPTIONS # Bytter GC og lar JVMen se at det er flere CPU kjerner
       value: -XX:+UseParallelGC -XX:ActiveProcessorCount=4
 
   accessPolicy:
     outbound:
-      rules:
-        - application: dp-arena-meldeplikt-adapter
-        - application: dp-behov-pdf-generator
+      external:
+        - host: {{ PDL_API_HOST }}
     inbound:
       rules:
-        - application: dp-saksbehandling-frontend
-        - application: dp-rapportering-frontend
         - application: tokenx-token-generator
           namespace: aura
           cluster: dev-gcp
