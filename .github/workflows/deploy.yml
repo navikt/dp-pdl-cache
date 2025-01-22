@@ -1,0 +1,86 @@
+name: Build and deploy
+
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Miljø'
+        required: true
+        default: 'q2'
+        type: choice
+        options:
+          - q
+          - p
+
+env:
+  APPNAME: dp-pdl-cache
+  ENVIRONMENT: ${{ github.event.inputs.environment }}
+
+jobs:
+  build:
+    name: Build and publish Docker image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build application
+        run: ./gradlew build
+
+      - name: docker-build-push
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          team: teamdagpenger
+          tag: ${{ github.sha }}
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+
+    outputs:
+      image: ${{ steps.docker-build-push.outputs.image }}
+
+  deploy-dev:
+    if: github.event.inputs.environment != 'p'
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Set default environment for push to main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: echo 'ENVIRONMENT=q' >> $GITHUB_ENV
+      - uses: actions/checkout@v4
+      - uses: nais/deploy/actions/deploy@v2
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          VAR: image=${{ needs.build.outputs.image }},appName=${{ env.APPNAME }}
+          VARS: .nais/vars-dev.yaml
+          RESOURCE: .nais/nais.yaml
+          PRINT_PAYLOAD: true
+
+  deploy-prod:
+    if: github.event.inputs.environment == 'p'
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: nais/deploy/actions/deploy@v2
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-gcp
+          VAR: image=${{ needs.build.outputs.image }},appName=${{ env.APPNAME }}
+          VARS: .nais/vars-prod.yaml
+          RESOURCE: .nais/nais.yaml
+          PRINT_PAYLOAD: true
