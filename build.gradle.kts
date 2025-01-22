@@ -1,6 +1,6 @@
 val ktorVersion = "3.0.3"
 
-project.setProperty("mainClassName", "io.ktor.server.netty.EngineMain")
+project.setProperty("mainClassName", "io.ktor.server.cio.EngineMain")
 
 plugins {
     // Apply the org.jetbrains.kotlin.jvm plugin to add support for Kotlin.
@@ -43,7 +43,7 @@ repositories {
 
 dependencies {
     implementation("io.ktor:ktor-server-core:$ktorVersion")
-    implementation("io.ktor:ktor-server-netty:$ktorVersion")
+    implementation("io.ktor:ktor-server-cio:$ktorVersion")
     implementation("io.ktor:ktor-server-auth:$ktorVersion")
     implementation("io.ktor:ktor-server-status-pages:$ktorVersion")
     implementation("io.ktor:ktor-server-metrics-micrometer:$ktorVersion")
