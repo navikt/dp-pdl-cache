@@ -28,16 +28,16 @@ spec:
       cpu: 150m
       memory: 256Mi
   liveness:
-    path: /isAlive
+    path: /internal/isalive
   readiness:
-    path: /isReady
+    path: /internal/isready
   observability:
     autoInstrumentation:
       enabled: true
       runtime: java
   prometheus:
     enabled: true
-    path: /metrics
+    path: /internal/metrics
   secureLogs:
     enabled: true
 
