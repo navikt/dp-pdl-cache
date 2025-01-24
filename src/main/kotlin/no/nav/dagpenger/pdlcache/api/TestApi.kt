@@ -38,9 +38,6 @@ fun Routing.testApi() {
 
             try {
                 GlideClient.createClient(config).get().use { client ->
-                    logger.info("PING: " + client.ping(gs("PING")).get())
-                    logger.info("PING(found you): " + client.ping(gs("found you")).get())
-
                     logger.info("SET(apples, oranges): " + client.set(gs("apples"), gs("oranges")).get())
                     logger.info("GET(apples): " + client.get(gs("apples")).get())
                 }
