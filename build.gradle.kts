@@ -1,4 +1,4 @@
-val ktorVersion = "3.0.3"
+val ktorVersion = "3.1.1"
 
 project.setProperty("mainClassName", "io.ktor.server.cio.EngineMain")
 
