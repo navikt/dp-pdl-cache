@@ -2,11 +2,11 @@ apiVersion: aiven.io/v1alpha1
 kind: Valkey
 
 metadata:
-  labels:
-    app: dp-pdl-cache
-    namespace: teamdagpenger
   name: valkey-teamdagpenger-identer
   namespace: teamdagpenger
+  labels:
+    team: teamdagpenger
+    app: dp-pdl-cache
 spec:
   plan: {{ valkey.plan }}
   project: {{ valkey.project }}
