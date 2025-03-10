@@ -1,3 +1,4 @@
-FROM gcr.io/distroless/java21-debian12:nonroot
+FROM gcr.io/distroless/java21
 
-COPY build/libs/dp-pdl-cache-all.jar /app/app.jar
+COPY build/libs/dp-pdl-cache-all.jar /app.jar
+CMD ["/app.jar"]
