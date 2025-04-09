@@ -4,7 +4,7 @@ project.setProperty("mainClassName", "io.ktor.server.cio.EngineMain")
 
 plugins {
     // Apply the org.jetbrains.kotlin.jvm plugin to add support for Kotlin.
-    kotlin("jvm") version "2.1.10"
+    kotlin("jvm") version "2.1.20"
 
     // Apply the application plugin to add support for building a CLI application in Java.
     application
