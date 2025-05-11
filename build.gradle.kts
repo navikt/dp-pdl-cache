@@ -66,7 +66,7 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
-    testImplementation("no.nav.security:mock-oauth2-server:2.1.10")
+    testImplementation("no.nav.security:mock-oauth2-server:2.1.11")
 }
 
 tasks {
