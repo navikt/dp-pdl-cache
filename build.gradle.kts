@@ -53,7 +53,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-jackson:$ktorVersion")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.3")
 
-    implementation("no.nav.security:token-validation-ktor-v3:5.0.24")
+    implementation("no.nav.security:token-validation-ktor-v3:5.0.27")
 
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-cio:$ktorVersion")
